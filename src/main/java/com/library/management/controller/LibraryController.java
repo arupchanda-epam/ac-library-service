@@ -16,6 +16,9 @@ public class LibraryController {
     @Autowired
     LibraryService libraryService;
 
+//    @Autowired
+//    private Tracer tracer;
+
     @Autowired
     BookServiceDelegate bookServiceDelegate;
 
@@ -48,9 +51,26 @@ public class LibraryController {
         return userServiceDelegate.getUsers();
     }
 
+//    public LibraryController(Tracer tracer) {
+//        this.tracer = tracer;
+//    }
+
     @GetMapping("/library/users/{id}")
-    private Optional<User> getUser(@PathVariable("id") Long id) {
-        return userServiceDelegate.getUser(id);
+    private Optional<User> getUser( @PathVariable("id") Long id) {
+        Optional<User> user = null;
+        try {
+//            span = this.tracer.nextSpan().name("ManualSpan").start();
+//            span.tag("ManualTag", "I am making rest call using feign clients");
+//            span.annotate("Process Started");
+
+            user = userServiceDelegate.getUser(id);
+//            span.annotate("Process Finished");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+//            span.finish();
+        }
+        return user;
     }
 
     @PostMapping("/library/users")

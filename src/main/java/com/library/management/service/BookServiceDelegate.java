@@ -20,10 +20,7 @@ public class BookServiceDelegate {
     @Autowired
     RestTemplate restTemplate;
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+
 
     @HystrixCommand(fallbackMethod = "callBookServiceGetBooks_Fallback")
     public Iterable<Book> getBooks() {
